@@ -1,0 +1,104 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ── 폰트 Fallback 전략 (FOUT 최소화) ─────────────────────────
+   Noto Serif KR 로딩 전 시스템 명조체로 fallback.
+   font-display: swap → 폰트 로드 후 즉시 교체 (레이아웃 shift 최소).
+   ─────────────────────────────────────────────────────────── */
+:root {
+  --font-serif: 'Noto Serif KR', '바탕', 'Georgia', serif;
+  --font-sans: system-ui, 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif;
+  color-scheme: dark;
+}
+
+html,
+body {
+  background-color: #0a0f14;
+  color: #f0ece4;
+  /* 모바일 Safari: 100vh 버그 방지 */
+  min-height: 100dvh;
+  overscroll-behavior: none;
+  -webkit-tap-highlight-color: transparent;
+  /*
+   * [STEP 6 FOUT 대비] Noto Serif KR 로딩 전 시스템 명조체로 레이아웃을 잡는다.
+   * 폰트 교체(swap) 시 글자 크기 차이로 인한 CLS를 최소화하기 위해
+   * 시스템 폰트(바탕/Georgia)와 크기가 유사한 폰트를 먼저 적용.
+   */
+  font-family: 'Noto Serif KR', '바탕', 'BatangChe', 'Georgia', serif;
+}
+
+/* 스크롤바 숨기기 (모바일 느낌) */
+::-webkit-scrollbar {
+  display: none;
+}
+* {
+  scrollbar-width: none;
+}
+
+/* 명조체 기본 적용 레이어 */
+.font-serif {
+  font-family: var(--font-serif);
+}
+
+/* ── 파티클 CSS 애니메이션 (Splash 페이지) ─────────────────── */
+@keyframes particle-float-a {
+  0%   { transform: translate(0, 0) scale(1);   opacity: 0; }
+  15%  { opacity: 0.7; }
+  85%  { opacity: 0.4; }
+  100% { transform: translate(-40px, -120px) scale(0.6); opacity: 0; }
+}
+@keyframes particle-float-b {
+  0%   { transform: translate(0, 0) scale(0.8); opacity: 0; }
+  20%  { opacity: 0.6; }
+  100% { transform: translate(60px, -90px) scale(1.2);  opacity: 0; }
+}
+@keyframes particle-float-c {
+  0%   { transform: translate(0, 0) scale(1.1); opacity: 0; }
+  10%  { opacity: 0.8; }
+  90%  { opacity: 0.2; }
+  100% { transform: translate(20px, -140px) scale(0.5); opacity: 0; }
+}
+@keyframes particle-float-d {
+  0%   { transform: translate(0, 0) scale(0.9); opacity: 0; }
+  25%  { opacity: 0.5; }
+  100% { transform: translate(-70px, -80px) scale(1.3); opacity: 0; }
+}
+@keyframes particle-float-e {
+  0%   { transform: translate(0, 0) rotate(0deg);   opacity: 0; }
+  15%  { opacity: 0.6; }
+  100% { transform: translate(30px, -110px) rotate(180deg); opacity: 0; }
+}
+@keyframes particle-float-f {
+  0%   { transform: translate(0, 0) scale(1);   opacity: 0; }
+  20%  { opacity: 0.4; }
+  100% { transform: translate(-20px, -100px) scale(0.7); opacity: 0; }
+}
+@keyframes particle-float-g {
+  0%   { transform: translate(0, 0) scale(0.7); opacity: 0; }
+  12%  { opacity: 0.9; }
+  100% { transform: translate(50px, -130px) scale(1.1);  opacity: 0; }
+}
+
+/* prefers-reduced-motion: 애니메이션 비선호 사용자/저사양 기기 배려 */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* ── 오디오 웨이브 바 ─────────────────────────────────────── */
+.audio-wave-bar {
+  animation: wave var(--delay, 0.8s) ease-in-out infinite;
+  animation-delay: var(--bar-delay, 0s);
+}
+
+/* ── 유틸리티 ────────────────────────────────────────────── */
+.line-clamp-2 {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
